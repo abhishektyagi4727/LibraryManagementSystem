@@ -2,13 +2,11 @@ package com.library.librarian;
 
 import java.io.IOException;
 import java.sql.*;
-
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import com.library.DbConnection;
+import com.library.db.DbConnection;
 
 @WebServlet("/rejectRequestServlet")
 public class RejectRequestServlet extends HttpServlet {
@@ -19,7 +17,7 @@ public class RejectRequestServlet extends HttpServlet {
 		int requestId = Integer.parseInt(request.getParameter("requestId"));
 
 		try {
-			 Connection con = DbConnection.getConnection();
+			Connection con = DbConnection.getConnection();
 
 			String sql = "UPDATE book_request SET status='REJECTED' WHERE request_id=?";
 			PreparedStatement ps = con.prepareStatement(sql);

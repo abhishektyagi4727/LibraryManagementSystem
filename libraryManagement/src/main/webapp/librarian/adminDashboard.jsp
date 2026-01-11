@@ -82,7 +82,7 @@ body{
         <div class="card-body text-center">
           <h5>Students</h5>
           <p>View students list</p>
-          <a href="viewStudentsServlet" class="btn btn-light">Go</a>
+          <a href="/libraryManagement/librarian/viewStudents.jsp" class="btn btn-light">Go</a>
         </div>
       </div>
     </div>

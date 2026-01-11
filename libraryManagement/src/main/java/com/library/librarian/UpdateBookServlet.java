@@ -9,7 +9,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import com.library.DbConnection;
+import com.library.db.DbConnection;
 
 @WebServlet("/updateBookServlet")
 public class UpdateBookServlet extends HttpServlet 
@@ -24,7 +24,8 @@ public class UpdateBookServlet extends HttpServlet
 
 		try 
 		{
-		 conn = DbConnection.getConnection();			String sql = "UPDATE book SET title=?, author=?, quantity=? WHERE book_id=?";
+			 conn = DbConnection.getConnection();
+			String sql = "UPDATE book SET title=?, author=?, quantity=? WHERE book_id=?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, request.getParameter("title"));
 			ps.setString(2, request.getParameter("author"));
@@ -48,7 +49,12 @@ public class UpdateBookServlet extends HttpServlet
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

@@ -2,47 +2,56 @@ package com.library.librarian;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-
-import javax.servlet.ServletException;
+import java.sql.SQLException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
-import com.library.DbConnection;
+import com.library.db.DbConnection;
 
 @WebServlet("/deleteBookServlet")
-public class DeleteBookServlet extends HttpServlet {
+public class DeleteBookServlet extends HttpServlet 
+{
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
+	{
 
-        int bookId = Integer.parseInt(request.getParameter("id"));
+		String bookId = request.getParameter("id");
+		Connection conn = null;
+		PreparedStatement ps = null;
 
-        try (Connection con = DbConnection.getConnection();
-             PreparedStatement ps =
-                 con.prepareStatement(
-                     "UPDATE book SET status='inactive' WHERE book_id=?")) {
-
-            ps.setInt(1, bookId);
-            int rows = ps.executeUpdate();
-
-            if (rows > 0) {
-                response.sendRedirect(
-                        request.getContextPath() +
-                        "/librarian/viewBooks.jsp?msg=deleted");
-            } else {
-                response.sendRedirect(
-                        request.getContextPath() +
-                        "/librarian/viewBooks.jsp?msg=notfound");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect(
-                    request.getContextPath() +
-                    "/librarian/viewBooks.jsp?msg=error");
-        }
-    }
+		try 
+		{
+			 conn= DbConnection.getConnection();
+			String sql = "DELETE FROM book WHERE book_id=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, bookId);
+			
+			int rows = ps.executeUpdate();
+			response.sendRedirect("/libraryManagement/librarian/viewBooks.jsp");
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			response.sendRedirect("/libraryManagement/librarian/viewBooks.jsp?msg=error");
+		} 
+		finally 
+		{
+			try 
+			{
+				if (ps != null)
+					ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

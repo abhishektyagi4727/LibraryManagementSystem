@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     import="java.sql.*" pageEncoding="UTF-8"%>
 <%@ include file="studentNavbar.jsp"%>
-<%@ page import="com.library.DbConnection" %>
+<%@ page import="com.library.db.DbConnection" %>
 
 <!DOCTYPE html>
 <html>
@@ -16,6 +16,7 @@
     <%
     String msg = request.getParameter("msg");
     if ("success".equals(msg)) { %>
+    
         <div class="alert alert-success">Book requested successfully</div>
     <% } else if ("already".equals(msg)) { %>
         <div class="alert alert-warning">You have already requested this book</div>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.sql.*"%>
 <%@ include file="studentNavbar.jsp"%>
-<%@ page import="com.library.DbConnection"%>
+<%@ page import="com.library.db.DbConnection" %>
 
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@
 			</tr>
 
 			<%
-			Connection con = DbConnection.getConnection();
+			 Connection con = DbConnection.getConnection();
 
 			String sql = "SELECT b.title, br.request_date, br.status " + "FROM book_request br "
 					+ "JOIN book b ON br.book_id=b.book_id " + "WHERE br.student_id=?";
@@ -34,30 +34,25 @@
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				
+				String status = rs.getString("status");
 			%>
 			<tr>
 				<td><%=rs.getString("title")%></td>
 				<td><%=rs.getDate("request_date")%></td>
-				
-					<%
-					String status = rs.getString("status").trim().toUpperCase();
-					%>
-				
 				<td>
 					<%
 					if ("PENDING".equals(status)) {
-					%> <span class="badge bg-warning">Pending</span> <%
-                    } else if ("APPROVED".equals(status)) {
-                    %> <span class="badge bg-success">Approved</span> <%
-                    } else {
-                    %> <span class="badge bg-danger">Rejected</span> <%
-                    }
-                     %>
+					%> <span class="badge bg-warning">Pending</span>
+					<%
+					} else if ("APPROVED".equals(status)) {
+					%> <span
+					class="badge bg-success">Approved</span> <%
+ 					} else {
+ 					%> <span
+					class="badge bg-danger">Rejected</span> <%
+ 					}
+ 					%>
 				</td>
-
-			
-
 			</tr>
 			<%
 			}

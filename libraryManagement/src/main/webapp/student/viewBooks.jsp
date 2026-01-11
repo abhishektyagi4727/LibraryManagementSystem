@@ -1,93 +1,92 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.sql.*"%>
-<%@ page import="com.library.DbConnection" %>
-
-<%
-/* Student session check */
-if (session.getAttribute("studentId") == null) {
-    response.sendRedirect("login.jsp");
-    return;
-}
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" import="java.sql.*" pageEncoding="UTF-8"%>
+<%@ page import="com.library.db.DbConnection" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>View Books</title>
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet">
+<meta charset="UTF-8">
+<title>View All Books</title>
+<style>
+body {
+	background: #f4f6f9;
+}
+.table-container {
+	margin-top: 40px;
+}
+</style>
 </head>
 
 <body>
 
-<%@ include file="studentNavbar.jsp" %>
+	<%@ include file="studentNavbar.jsp"%>
 
-<div class="container mt-4">
+	<div class="container table-container animate__animated animate__fadeIn">
 
-    <h3 class="text-center mb-4">📚 Available Books</h3>
+		<h3 class="text-center mb-4 fw-bold">📚 All Books (Student View)</h3>
+		<table class="table table-bordered table-hover shadow-sm">
+			<thead class="table-dark text-center">
+				<tr>
+					<th>ID</th>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Quantity</th>
+				</tr>
+			</thead>
 
-    <%
-        Connection con = DbConnection.getConnection();
+			<tbody>
+				<%
+				Connection con = null;
+				PreparedStatement ps = null;
+				ResultSet rs = null;
 
-        String sql =
-            "SELECT book_id, title, author, quantity " +
-            "FROM book " +
-            "WHERE status='active'";
+				try 
+				{
+					 con = DbConnection.getConnection();
+					ps = con.prepareStatement("SELECT * FROM book");
+					rs = ps.executeQuery();
 
-        PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+					while (rs.next()) 
+					{
+				%>
+				<tr class="text-center">
+					<td><%=rs.getInt("book_id")%></td>
+					<td><%=rs.getString("title")%></td>
+					<td><%=rs.getString("author")%></td>
+					<td><span class="badge bg-success fs-6"> <%=rs.getInt("quantity")%>
+					</span></td>
+				</tr>
+				<%
+				}
+				} catch (Exception e) {
+				e.printStackTrace();
+				%>
+				<tr>
+					<td colspan="5" class="text-center text-danger">Error loading
+						books</td>
+				</tr>
+				<%
+				} finally {
+				try {
+					if (rs != null)
+						rs.close();
+				} catch (Exception e) {
+				}
+				try {
+					if (ps != null)
+						ps.close();
+				} catch (Exception e) {
+				}
+				try {
+					if (con != null)
+						con.close();
+				} catch (Exception e) {
+				}
+				}
+				%>
+			</tbody>
+		</table>
 
-        boolean hasBook = false;
-
-        if (rs.next()) {
-            hasBook = true;
-    %>
-
-    <!-- BOOK TABLE -->
-    <table class="table table-bordered table-hover text-center">
-        <tr class="table-dark">
-            <th>Book ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Available</th>
-        </tr>
-
-        <%
-            do {
-        %>
-        <tr>
-            <td><%= rs.getInt("book_id") %></td>
-            <td><%= rs.getString("title") %></td>
-            <td><%= rs.getString("author") %></td>
-            <td>
-                <span class="badge bg-success">
-                    <%= rs.getInt("quantity") %>
-                </span>
-            </td>
-        </tr>
-        <%
-            } while (rs.next());
-        %>
-    </table>
-
-    <%
-        } else {
-    %>
-
-    <!-- NO BOOK MESSAGE -->
-    <div class="alert alert-info text-center">
-        📭 No books available
-    </div>
-
-    <%
-        }
-        rs.close();
-        ps.close();
-        con.close();
-    %>
-
-</div>
+	</div>
 
 </body>
 </html>

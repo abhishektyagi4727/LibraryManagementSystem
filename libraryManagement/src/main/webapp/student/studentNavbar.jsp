@@ -43,11 +43,14 @@ animate__animated animate__fadeInDown">
           <a class="nav-link" href="/libraryManagement/student/requestBook.jsp" title="Request book issue">Issue Book</a>
         </li>
         <li class="nav-item">
-    		<a class="nav-link" href="/libraryManagement/student/requestStatus.jsp">Request Status</a>
+    		<a class="nav-link" href="/libraryManagement/student/requestStatus.jsp"> Request Status</a>
 		</li>
         <li class="nav-item">
           <a class="nav-link" href="/libraryManagement/student/returnBook.jsp" title="Return issued book">Return Book</a>
         </li>
+         <li class="nav-item">
+    		<a class="nav-link" href="/libraryManagement/studentProfile"> Profile</a>
+		</li>
 
         <li class="nav-item">
           <a class="nav-link text-warning fw-semibold" href="/libraryManagement/logout.jsp">

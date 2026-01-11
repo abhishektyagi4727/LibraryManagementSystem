@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.sql.*"%>
-<%@ page import="com.library.DbConnection" %>
-
+<%@ page import="com.library.db.DbConnection" %>
 <%
 if (session.getAttribute("adminName") == null) {
 	response.sendRedirect("login.jsp");
@@ -44,7 +43,7 @@ if (session.getAttribute("adminName") == null) {
 		}
 		%>
 		<%
-		Connection con=DbConnection.getConnection();
+		  Connection con = DbConnection.getConnection();
 		String sql = "SELECT br.request_id, s.student_id, s.name, b.book_id, b.title " + "FROM book_request br "
 				+ "JOIN student s ON br.student_id=s.student_id " + "JOIN book b ON br.book_id=b.book_id "
 				+ "WHERE br.status='PENDING'";
@@ -85,7 +84,7 @@ if (session.getAttribute("adminName") == null) {
 						<button class="btn btn-success btn-sm">Approve</button>
 					</form>
 
-					<form action="rejectRequestServlet" method="post"
+					<form action="/libraryManagement/rejectRequestServlet" method="post"
 						style="display: inline">
 						<input type="hidden" name="requestId"
 							value="<%=rs.getInt("request_id")%>">
@@ -108,6 +107,7 @@ if (session.getAttribute("adminName") == null) {
 
 		<%
 		}
+		con.close();
 		%>
 
 	</div>

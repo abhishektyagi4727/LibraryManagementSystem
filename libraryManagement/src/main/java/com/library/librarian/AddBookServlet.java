@@ -9,7 +9,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import com.library.DbConnection;
+import com.library.db.DbConnection;
 
 @WebServlet("/addBookServlet")
 public class AddBookServlet extends HttpServlet 
@@ -26,8 +26,7 @@ public class AddBookServlet extends HttpServlet
 
 		try 
 		{
-			
-			  conn = DbConnection.getConnection();
+			 conn = DbConnection.getConnection();
 			String sql = "INSERT INTO book (title, author, quantity) VALUES (?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, title);
@@ -48,5 +47,20 @@ public class AddBookServlet extends HttpServlet
 			e.printStackTrace();
 			response.sendRedirect("/libraryManagement/librarian/addBook.jsp?msg=error");
 		} 
+		finally 
+		{
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

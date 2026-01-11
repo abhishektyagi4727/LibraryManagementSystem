@@ -2,13 +2,11 @@ package com.library.student;
 
 import java.io.IOException;
 import java.sql.*;
-
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import com.library.DbConnection;
+import com.library.db.DbConnection;
 
 @WebServlet("/myIssuedBooksServlet")
 public class MyIssuedBooksServlet extends HttpServlet 
@@ -25,7 +23,7 @@ public class MyIssuedBooksServlet extends HttpServlet
 		}
 
 		try {
-			 Connection con = DbConnection.getConnection();
+			Connection con = DbConnection.getConnection();
 
 			String sql = "SELECT b.title, i.issue_date, i.return_date, i.status "
 					+ "FROM issue i JOIN book b ON i.book_id=b.book_id " + "WHERE i.student_id=?";
@@ -35,7 +33,6 @@ public class MyIssuedBooksServlet extends HttpServlet
 			ResultSet rs = ps.executeQuery();
 			request.setAttribute("rs", rs);
 			request.getRequestDispatcher("/student/myIssuedBooks.jsp").forward(request, response);
-
 
 		} catch (Exception e) {
 			e.printStackTrace();

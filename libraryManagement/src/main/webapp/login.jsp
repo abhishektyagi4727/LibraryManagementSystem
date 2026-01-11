@@ -102,7 +102,7 @@ body{
       <!-- Student Register Link -->
       <div class="text-center mt-3">
         <span class="text-dark">New Student?</span>
-        <a href="/libraryManagement/student/studentRegister.jsp"
+        <a href="student/studentRegister.jsp"
            class="fw-bold text-decoration-none">
            Register here
         </a>

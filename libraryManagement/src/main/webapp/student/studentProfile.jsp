@@ -35,8 +35,15 @@
 <body>
 <%
 Integer id=(Integer)request.getAttribute("studentId");
-String userName=(String)request.getAttribute("username");
+String username=(String)request.getAttribute("username");
 String name=(String)request.getAttribute("name");
+String email=(String)request.getAttribute("email");
+String phone=(String)request.getAttribute("phone");
+String course=(String)request.getAttribute("course");
+Integer semester=(Integer)request.getAttribute("semester");
+String password=(String)request.getAttribute("password");
+
+
 %>
 <div class="container">
     <div class="card profile-card">
@@ -53,11 +60,31 @@ String name=(String)request.getAttribute("name");
                 </tr>
                 <tr>
                     <th>Username</th>
-                    <td><%=userName %></td>
+                    <td><%=username %></td>
                 </tr>
                 <tr>
                     <th>Name</th>
                     <td><%=name %></td>
+                </tr>
+                 <tr>
+                    <th>Email</th>
+                    <td><%=email %></td>
+                </tr>
+                 <tr>
+                    <th>Phone</th>
+                    <td><%=phone %></td>
+                </tr>
+                 <tr>
+                    <th>Course</th>
+                    <td><%=course %></td>
+                </tr>
+                 <tr>
+                    <th>Semester</th>
+                    <td><%=semester %></td>
+                </tr>
+                 <tr>
+                   <th>Password</th>
+                    <td><%=password %></td>
                 </tr>
             </table>
         </div>

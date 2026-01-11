@@ -5,7 +5,7 @@ import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import com.library.DbConnection;
+import com.library.db.DbConnection;
 
 @WebServlet("/requestBookServlet")
 public class RequestBookServlet extends HttpServlet {

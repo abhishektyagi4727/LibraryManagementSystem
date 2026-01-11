@@ -5,13 +5,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.library.DbConnection;
+import com.library.db.DbConnection;
 
 @WebServlet
 ("/issueBookServlet")
@@ -25,7 +24,8 @@ public class IssueBookServlet extends HttpServlet
 		int bookId = Integer.parseInt(request.getParameter("bookId"));
 
 		try {
-			 Connection con = DbConnection.getConnection();
+			Connection con = DbConnection.getConnection();
+
 			// 1️⃣ Insert into issue table
 			String issueSql = "INSERT INTO issue(student_id,book_id,issue_date,return_date,status) "
 					+ "VALUES(?,?,CURDATE(),DATE_ADD(CURDATE(),INTERVAL 7 DAY),'ISSUED')";

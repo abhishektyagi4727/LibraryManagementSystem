@@ -71,14 +71,39 @@ body{
           <label class="form-label fw-bold">Username</label>
           <input type="text" name="username"
           class="form-control" placeholder="Enter username" required>
+        </div>        
+                <div class="mb-3">
+          <label class="form-label fw-bold">Email</label>
+          <input type="email" name="email"
+          class="form-control" placeholder="Enter Email" required>
         </div>
+        
+                <div class="mb-3">
+          <label class="form-label fw-bold">Phone</label>
+          <input type="tel" name="phone"
+          class="form-control" placeholder="Enter Phone" required>
+        </div>
+        
+          <div class="mb-3">
+          <label class="form-label fw-bold">Course</label>
+          <input type="text" name="course"
+          class="form-control" placeholder="Enter Course" required>
+        </div>
+        
+          <div class="mb-3">
+          <label class="form-label fw-bold">Semester</label>
+          <input type="number" name="semester"
+          class="form-control" placeholder="Enter Semester" required>
+        </div>
+        
 
         <div class="mb-3">
           <label class="form-label fw-bold">Password</label>
           <input type="password" name="password"
           class="form-control" placeholder="Create password" required>
         </div>
-
+        
+        
         <div class="mb-3">
           <label class="form-label fw-bold">Confirm Password</label>
           <input type="password" name="confirmPassword"
