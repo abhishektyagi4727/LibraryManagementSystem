@@ -1,8 +1,8 @@
 [phases.setup]
-commands = ["echo 'Setting up Java 17'"]
+commands = ["echo 'Setup phase - Java only'"]
 
 [phases.install]
-commands = ["echo 'No additional packages needed'"]
+commands = ["echo 'No dependencies needed'"]
 
 [phases.build]
 commands = ["echo 'Skipping build - WAR will be run directly'"]
