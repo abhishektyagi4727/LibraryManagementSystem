@@ -1,0 +1,14 @@
+[phases.setup]
+commands = ["echo 'Setting up Java 17'"]
+
+[phases.install]
+commands = ["echo 'No additional packages needed'"]
+
+[phases.build]
+commands = ["echo 'Skipping build - WAR will be run directly'"]
+
+[phases.start]
+commands = ["sh start.sh"]
+
+[env]
+JAVA_VERSION = "17"
